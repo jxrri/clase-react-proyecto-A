@@ -52,6 +52,15 @@ export async function obtenerGeneros(signal?: AbortSignal) {
   return data.genres
 }
 
+// /movie/upcoming: lo que llega pronto a los cines. `region` es el código del país (VE, MX, ES, US)
+export async function obtenerEstrenos(pagina: number, region: string, signal?: AbortSignal) {
+  const { data } = await tmdb.get<Pagina<Pelicula>>('/movie/upcoming', {
+    params: { page: pagina, region },
+    signal,
+  })
+  return data
+}
+
 function hoy() {
   return new Date().toISOString().slice(0, 10)
 }

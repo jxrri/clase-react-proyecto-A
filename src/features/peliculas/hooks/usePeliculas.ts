@@ -1,6 +1,6 @@
 import { useConsulta } from '@/shared/hooks/useConsulta'
 import type { Orden } from '../models/pelicula'
-import { buscar, descubrir, obtenerDetalle, obtenerGeneros } from '../services/peliculas.service'
+import { buscar, descubrir, obtenerDetalle, obtenerEstrenos, obtenerGeneros } from '../services/peliculas.service'
 
 // M6 · Hooks de la feature: combinan useConsulta con el servicio.
 // La página ya no sabe de efectos, AbortController ni Axios: solo pide "las películas con estos filtros".
@@ -25,4 +25,8 @@ export function useGeneros() {
 // Lo usamos en M8, en la página de detalle
 export function usePelicula(id: number) {
   return useConsulta(`pelicula|${id}`, (signal) => obtenerDetalle(id, signal))
+}
+
+export function useEstrenos(pagina: number, region: string) {
+  return useConsulta(`estrenos|${region}|${pagina}`, (signal) => obtenerEstrenos(pagina, region, signal))
 }

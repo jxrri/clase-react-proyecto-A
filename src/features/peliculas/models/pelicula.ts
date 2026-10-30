@@ -57,3 +57,14 @@ export const ORDENES: { valor: Orden; texto: string }[] = [
 export function anio(fecha: string) {
   return fecha ? fecha.slice(0, 4) : 's/f'
 }
+
+// El estreno más cercano desde hoy (incluido). Las fechas "AAAA-MM-DD" se comparan bien como texto.
+// `hoy` va en hora local: toISOString() daría la fecha UTC y en Venezuela de noche ya sería "mañana".
+export function proximoEstreno(peliculas: PeliculaResumen[], hoy = new Date().toLocaleDateString('en-CA')) {
+  const futuras = peliculas.filter((p) => p.release_date >= hoy)
+  if (futuras.length === 0) return undefined
+  const pelicula = futuras.reduce((a, b) => (b.release_date < a.release_date ? b : a))
+  // Ambas fechas se leen como medianoche UTC, así la resta da días exactos
+  const dias = (Date.parse(pelicula.release_date) - Date.parse(hoy)) / 86_400_000
+  return { pelicula, dias }
+}

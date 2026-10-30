@@ -30,6 +30,9 @@ export function Header() {
           <NavLink to="/peliculas" className={enlace}>
             Películas
           </NavLink>
+          <NavLink to="/estrenos" className={enlace}>
+            Estrenos
+          </NavLink>
           <NavLink to="/favoritas" className={enlace}>
             <Heart className="fill-primary text-primary" />
             Favoritas
